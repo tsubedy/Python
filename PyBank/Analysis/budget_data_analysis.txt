@@ -1,0 +1,9 @@
+
+Budget Analysis
+======================================================
+Total number of months : 86
+Total amount : $38382578
+Average change : $-2315.12
+Greatest increase in profits of $1926159, in Feb-2012
+Greatest decrease in profits of $-2196167, in Sep-2013
+======================================================
