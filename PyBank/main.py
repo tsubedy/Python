@@ -14,7 +14,7 @@ output_file = os.path.join('.', 'Analysis', 'budget_data_analysis.txt')
 months_of_change = []
 actual_change_list = []
 max_increase = ["", 0]  # Compare with the lowest possible
-max_decrease = ["", 9999999999]  # Compare with the highest possible
+max_decrease = ["", 99999999999999999999]  # Compare with the highest possible
 
 total_change = 0
 
@@ -70,9 +70,9 @@ with open(data_file) as budget_data:
     output = (
         f"\nBudget Analysis\n"
         f"======================================================\n"
-        f"Total number of months : {total_months}\n"
-        f"Total amount : ${total_change}\n"
-        f"Average change : ${net_monthly_average:.2f}\n"
+        f"Total number of months: {total_months}\n"
+        f"Total amount:     ${total_change}\n"
+        f"Average change:   ${net_monthly_average:.2f}\n"
         f"Greatest increase in profits of ${max_increase[1]}, in {max_increase[0]}\n"
         f"Greatest decrease in profits of ${max_decrease[1]}, in {max_decrease[0]}\n"
         f"======================================================\n"
