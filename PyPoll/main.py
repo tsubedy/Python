@@ -8,13 +8,8 @@ output_file = os.path.join('.', 'Analysis', 'election_data_analysis.txt')
 
 # total votes casted
 total_votes = 0
-
-# List of Candidates to be elected (options)
-candidates = []
-
-# Name of the winning candidate and the number of votes received
-candidate_voted = ""
-
+candidates = {}
+candidate_percentage = {}
 
 # Read election_data.csv
 with open(data_file) as election_data:
@@ -25,70 +20,41 @@ with open(data_file) as election_data:
     print(f"Header: {header}")
 
     for row in reader:
-        # counting total votes (each row is counted as a vote)
+    # getting candidate's name from each row (index 2)
+        candidate_name = row[2]
+        if candidate_name not in candidates:
+            candidates[candidate_name] = 1
+        else:
+            candidates[candidate_name] = candidates[candidate_name] + 1
 
-        # getting candidate's name from each row (index 2)
-        candidate_voted = row[2]
-        candidates.append(candidate_voted)
     # print(candidates)
-    def counting(items):
-        d = {}
-        for i in items:
-            if i in d:
-                d[i] = d[i] + 1
-            else:
-                d[i] = 1
-        return d
+    total_votes = sum(candidates.values())
+    # print(total_votes)
 
-    # Counting votes for each candidates
-    z = counting(candidates)
-    # print(f"Vote counts for each candidates:  {z} ")  # name of the candidates with number of votes received
+    for key, value in candidates.items():
+        candidate_percentage[key] = (value /total_votes) * 100
 
-    # List of Name of the candidates
-    for i in z:
-        l = (i, z[i])
-        print("The number of votes:", l)
-    a1 = list(z.keys())
-    # print(f"Candidates {a1} ")
-
-
-    a = list(z.values())
-    # print(f"Count of Votes:  {a} ")  # List of number of votes received by each candidate
-
-    # Total votes counted
-    t = sum(a)
-
-
-
-
-    print(f"=======================")
-    print(f"Total votes casted {t}")
-
-    # Calculating percentages
-    percentage = []
-    for candidate, vote in z.items():
-        z[candidate] = (vote / t) * 100
-        percentage = z[candidate]
-
-        # print(percentage)
-
-        # print(f"votes received by {a[1]}:  {a[0]},  {percentage: .2f} ")
-        # print("Percentages of votes", percentage)
-
-    maximum = max(z, key=z.get)
-    winner = (maximum, z[maximum])
+    # print(candidate_percentage)
 
 with open(output_file, "w") as txt_file:
+
+    output = ""
+    for key, value in candidate_percentage.items():
+        output += key + ": " + "{:.3f}".format(value) + "% (" + str(candidates[key]) + ")\n"
+
+    maximum = max(candidate_percentage, key=candidate_percentage.get)
+    winner = (maximum)
+
     election_results = (
         f"Election Results\n"
-        f"=======================\n"
-        f"Total Votes: {t}\n"
-        # f"votes by candidates {z}\n"
-        f"Votes received by \n"
-        
-        f" {a1[0]}:  {a[0]}, {winner[1]:.2f}\n"
-        
-        f"The winner is : {winner[0]} who got {winner[1]:.2f}"
-
+        f"-------------------------\n"
+        f"Total Votes: {total_votes}\n"
+        f"-------------------------\n"
+        f"{output}"
+        f"-------------------------\n"
+        f"Winner: {winner} \n"
+        f"-------------------------\n"
     )
+    txt_file.write(election_results)
+
 # print(election_results)
