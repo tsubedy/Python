@@ -57,4 +57,4 @@ with open(output_file, "w") as txt_file:
     )
     txt_file.write(election_results)
 
-# print(election_results)
+print(election_results)
